@@ -9,3 +9,11 @@ function fizzbuzz(numero) {
     return String(numero);
   }
 }
+
+for (let i = 0; i <= 20; i++) {
+    const mensagem = fizzbuzz(1)
+    console.log(mensagem);
+  
+}
+
+module.exports = fizzbuzz
