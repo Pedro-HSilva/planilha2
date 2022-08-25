@@ -1,12 +1,7 @@
 
-// const {fizzbuzz} = require('./fizzbuzz')
-
-// fizzbuzz()
-
 const express = require('express')
-const TransacoesRepositorio = require("./transacoes-repositorio")
-
 const app = express()
+const TransacoesRepositorio = require("./transacoes-repositorio")
 const port = 3000;
 
 app.use(express.json())
@@ -18,6 +13,18 @@ app.get('/transacoes', (req , res) => {
 
   res.send(transacoes)
 
+  let saldo = 0
+  transacoes.transacao.forEach((transacao) => {
+  if (transacao.categoria === "Despesa") {
+    saldo = saldo - transacao.valor
+  }
+  if (transacao.categoria === "Receita") {
+    saldo = saldo + transacao.valor
+  }
+});
+  transacoes.saldo = saldo
+  res.send(transacoes)
+
 })
 
 app.post('/transacoes', (req, res) => {
@@ -26,7 +33,6 @@ app.post('/transacoes', (req, res) => {
   repositorio.criarTransacao(transacao)
   res.status(201).send(transacao)
 })
-
 
 app.listen(port, () => {
   console.log(`Servidor ouvindo na porta ${port}`);
