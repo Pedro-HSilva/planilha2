@@ -11,9 +11,8 @@ function fizzbuzz(numero) {
 }
 
 for (let i = 0; i <= 20; i++) {
-    const mensagem = fizzbuzz(1)
-    console.log(mensagem);
-  
+  const mensagem = fizzbuzz(i);
+  console.log(mensagem);
 }
 
-module.exports = fizzbuzz
+module.exports = fizzbuzz;

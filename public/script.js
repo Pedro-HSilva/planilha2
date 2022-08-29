@@ -1,97 +1,108 @@
-
 function despesaUsuario() {
-  let descricaoDespesa = prompt('Qual a descricao de sua despesa?')
-  let valorDespesa = prompt('Qual o valor de sua despesa?')
+  const descricaoDespesa = prompt("Qual a descricao de sua despesa?");
+  const valorDespesa = prompt("Qual o valor de sua despesa?");
 
-  const valor = Number(valorDespesa)
+  if (valorDespesa.indexOf(",") > 0) {
+    alert(
+      "Você deve digitar números com o símbolo decimal ponto, e não vírgula"
+    );
+    return;
+  }
 
-  if (isNaN(valor)) {
-      return alert('Este campo deve ser preenchido com um valor numérico')
-      
-    }
+  if (isNaN(valorDespesa)) {
+    return alert("Este campo deve ser preenchido com um valor numérico");
+  }
+
+  const valor = Number(valorDespesa);
 
   const despesa = {
-      descricao: descricaoDespesa,
-      valor: valor,
-      categoria: "Despesa"
-  }
-  exibirSaldo()
-  enviaDados(despesa)
-  getTransacoes()
+    descricao: descricaoDespesa,
+    valor: valor,
+    categoria: "Despesa",
+  };
+  // exibirSaldo();
+  enviaDados(despesa);
+  getTransacoes();
 }
 
-
-
 function receitaUsuario() {
-  let descricaoReceita = prompt('Qual a descricao de sua receita?')
-  let valorReceita = parseInt(prompt('Qual o valor de sua receita?'))
+  const descricaoReceita = prompt("Qual a descricao de sua receita?");
+  const valorReceita = prompt("Qual o valor de sua receita?");
 
-  const valor = Number(valorReceita)
+  if (valorReceita.indexOf(",") > 0) {
+    alert(
+      "Você deve digitar números com o símbolo decimal ponto, e não vírgula"
+    );
+    return;
+  }
 
-  if (isNaN(valor)) {
-      return alert('Este campo deve ser preenchido com um valor numérico')
-    }
+  if (isNaN(valorReceita)) {
+    return alert("Este campo deve ser preenchido com um valor numérico");
+  }
 
+  const valor = Number(valorReceita);
 
   const receita = {
-      descricao: descricaoReceita,
-      valor: valor,
-      categoria: "Receita"
-  }
-  exibirSaldo()
-  enviaDados(receita)
-  getTransacoes()
+    descricao: descricaoReceita,
+    valor: valor,
+    categoria: "Receita",
+  };
+  // exibirSaldo();
+  enviaDados(receita);
+  getTransacoes();
 }
 
 function formatarValor(valor) {
-return valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+  return valor.toLocaleString("pt-br", { style: "currency", currency: "BRL" });
 }
-
 
 function exibirSaldo(saldo) {
-document.getElementById('saldo').innerHTML = `Saldo: R$ ${saldo}`
+  document.getElementById("saldo").innerHTML = `Saldo: R$ ${saldo}`;
 }
-
 
 function adicionaTabela(transacoes) {
-let tabela = '';
+  let tabela = "";
 
-transacoes.reverse().forEach(transacao => {
-  let colunaDescricao = `<td class="coluna-descricao">${transacao.descricao}</td>`
-  let colunaCategoria =  `<td class="coluna-categoria">${transacao.categoria}</td>`
-  let colunaValor = `<td class="coluna-valor">${transacao.valor}</td>`
-  let linha = `<tr>${colunaDescricao}${colunaCategoria}${colunaValor}</tr>`
-  tabela += linha
-});
-document.getElementById('lista-transacoes-conteudo').innerHTML = tabela;
+  transacoes.reverse().forEach((transacao) => {
+    let colunaDescricao = `<td class="coluna-descricao">${transacao.descricao}</td>`;
+    let colunaCategoria = `<td class="coluna-categoria">${transacao.categoria}</td>`;
+    let colunaValor = `<td class="coluna-valor">${formatarValor(
+      transacao.valor
+    )}</td>`;
+    let linha = `<tr>${colunaDescricao}${colunaCategoria}${colunaValor}</tr>`;
+    tabela += linha;
+  });
+  document.getElementById("lista-transacoes-conteudo").innerHTML = tabela;
 }
 
-document.getElementById("botao-despesa").addEventListener('click',despesaUsuario)
-document.getElementById("botao-receita").addEventListener('click',receitaUsuario)
-
+document
+  .getElementById("botao-despesa")
+  .addEventListener("click", despesaUsuario);
+document
+  .getElementById("botao-receita")
+  .addEventListener("click", receitaUsuario);
 
 async function getTransacoes() {
-const url = `/transacoes`;
+  const url = `/transacoes`;
 
-const respostaFetch = await fetch(url);
-const financas = await respostaFetch.json()
+  const respostaFetch = await fetch(url);
+  const financas = await respostaFetch.json();
 
-exibirSaldo(financas.saldo)
-adicionaTabela(financas.transacoes)
+  exibirSaldo(financas.saldo);
+  adicionaTabela(financas.transacoes);
+  console.log(financas);
 }
+getTransacoes();
 
 async function enviaDados(transacao) {
   const url = `/transacoes`;
 
-  const requisicao =  { method: 'POST', body: JSON.stringify(transacao), Headers: {
-    "content-type": "application/json"
-  }}
-  await fetch(url, requisicao)
+  const requisicao = {
+    method: "POST",
+    body: JSON.stringify(transacao),
+    headers: {
+      "content-type": "application/json",
+    },
+  };
+  await fetch(url, requisicao);
 }
-
-getTransacoes()
-
-    
-  
-    
-    

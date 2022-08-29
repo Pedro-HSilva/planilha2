@@ -1,6 +1,4 @@
+POST https://3000-pedrohsilva-planilha2-g5635fntd4s.ws-us62.gitpod.io/transacoes
+Content-Type: application/json
 
-GET   https://3000-pedrohsilva-planilha2-g5635fntd4s.ws-us62.gitpod.io/transacoes
-
-###
-
-POST  https://3000-pedrohsilva-planilha2-g5635fntd4s.ws-us62.gitpod.io/transacoes
+{}
