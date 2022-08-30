@@ -4,8 +4,8 @@ const app = express();
 const TransacoesRepositorio = require("./infra/sql-transacoes-repositorio");
 const port = 3000;
 
-app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
+app.use(express.static(`${__dirname}/public`));
 
 app.get("/transacoes", async (req, res) => {
   const repositorio = new TransacoesRepositorio();
@@ -21,15 +21,14 @@ app.get("/transacoes", async (req, res) => {
     }
   });
   transacoes.saldo = saldo;
-  // console.log(transacoes);
   res.send(transacoes);
 });
 
-app.post("/transacoes", (req, res) => {
+app.post("/transacoes", async(req, res) => {
   const repositorio = new TransacoesRepositorio();
   const transacao = req.body;
   console.log(req.body);
-  repositorio.criarTransacao(transacao);
+  await repositorio.criarTransacao(transacao);
   res.status(201).send(transacao);
 });
 
