@@ -6,9 +6,9 @@ const port = 3000;
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 
-app.get("/transacoes", (req, res) => {
+app.get("/transacoes", async (req, res) => {
   const repositorio = new TransacoesRepositorio();
-  const transacoes = repositorio.listarTransacoes();
+  const transacoes = await repositorio.listarTransacoes();
 
   let saldo = 0;
   transacoes.transacoes.forEach((transacao) => {
