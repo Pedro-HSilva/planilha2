@@ -57,7 +57,9 @@ function formatarValor(valor) {
 }
 
 function exibirSaldo(saldo) {
-  document.getElementById("saldo").innerHTML = `Saldo: R$ ${saldo}`;
+  document.getElementById("saldo").innerHTML = `Saldo: ${formatarValor(
+      saldo
+    )}`;
 }
 
 function adicionaTabela(transacoes) {
