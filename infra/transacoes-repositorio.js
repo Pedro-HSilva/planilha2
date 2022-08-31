@@ -1,5 +1,5 @@
 const transacoes = {
-  transacoes: [],
+  transacoes: []
 };
 
 class TransacoesRepositorio {
