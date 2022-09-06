@@ -57,9 +57,7 @@ function formatarValor(valor) {
 }
 
 function exibirSaldo(saldo) {
-  document.getElementById("saldo").innerHTML = `Saldo: ${formatarValor(
-      saldo
-    )}`;
+  document.getElementById("saldo").innerHTML = `Saldo: ${formatarValor(saldo)}`;
 }
 
 function adicionaTabela(transacoes) {
@@ -68,10 +66,14 @@ function adicionaTabela(transacoes) {
   transacoes.reverse().forEach((transacao) => {
     let colunaDescricao = `<td class="coluna-descricao">${transacao.descricao}</td>`;
     let colunaCategoria = `<td class="coluna-categoria">${transacao.categoria}</td>`;
-    let colunaValor = `<td class="coluna-valor">${formatarValor(
-      transacao.valor
-    )}</td>`;
-    let linha = `<tr>${colunaDescricao}${colunaCategoria}${colunaValor}</tr>`;
+    let colunaValor = `<td class="coluna-valor">
+      ${formatarValor(transacao.valor)}
+      </td>`;
+    let colunaOpcoes = `<td class="coluna-opcoes">
+    <button type="button" id="botao-apagar">APAGAR</button> 
+    <button type="button" id="botao-editar">EDITAR</button>
+      </td>`;
+    let linha = `<tr>${colunaDescricao}${colunaCategoria}${colunaValor}${colunaOpcoes}</tr>`;
     tabela += linha;
   });
   document.getElementById("lista-transacoes-conteudo").innerHTML = tabela;
